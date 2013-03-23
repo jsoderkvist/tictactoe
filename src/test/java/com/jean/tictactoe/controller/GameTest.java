@@ -1,5 +1,8 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.controller;
 
+import com.jean.tictactoe.model.InputStreamPlayer;
+import com.jean.tictactoe.model.Mark;
+import com.jean.tictactoe.view.ConsoleView;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
@@ -20,8 +23,8 @@ public class GameTest extends TestCase {
         InputStream inputStream2 = new ByteArrayInputStream(inputMoves2.getBytes());
         InputStreamPlayer oPlayer = new InputStreamPlayer(inputStream2, Mark.O);
 
-        Game game = new Game(xPlayer, oPlayer);
-        game.play();
+        Game game = new Game();
+        game.play(xPlayer, oPlayer, new ConsoleView());
     }
 
     public void testGamePlayAgain()
@@ -34,7 +37,7 @@ public class GameTest extends TestCase {
         InputStream inputStream2 = new ByteArrayInputStream(inputMoves2.getBytes());
         InputStreamPlayer xPlayer = new InputStreamPlayer(inputStream2, Mark.X);
 
-        Game game = new Game(xPlayer, oPlayer);
-        game.play();
+        Game game = new Game();
+        game.play(xPlayer, oPlayer, new ConsoleView());
     }
 }

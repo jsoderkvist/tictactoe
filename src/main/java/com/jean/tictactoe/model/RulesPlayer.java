@@ -1,4 +1,4 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ public class RulesPlayer implements Player {
     private Mark mark;
     private Mark opponentMark;
 
-    private static Logger logger = Logger.getLogger("com.jean.tictactoe.RulesPlayer");
+    private static Logger logger = Logger.getLogger("com.jean.tictactoe.model.RulesPlayer");
 
     public RulesPlayer(Mark mark) {
         this.mark = mark;

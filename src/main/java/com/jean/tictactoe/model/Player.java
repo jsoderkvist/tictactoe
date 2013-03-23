@@ -1,4 +1,4 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.model;
 
 /**
  * Tic Tac Toe Player Interface

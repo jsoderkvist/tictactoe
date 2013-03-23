@@ -1,4 +1,4 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.model;
 
 import java.util.ArrayList;
 import java.util.List;
