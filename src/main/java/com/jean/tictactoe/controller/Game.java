@@ -4,6 +4,9 @@ import com.jean.tictactoe.model.*;
 import com.jean.tictactoe.view.ConsoleView;
 import com.jean.tictactoe.view.View;
 
+import java.io.InputStream;
+import java.io.PrintStream;
+
 /**
  * Tic Tac Toe Game
  */
@@ -14,13 +17,10 @@ public class Game {
         Board board = new Board();
 
         while (true) {
-            // get player move
             currentPlayer.makeNextMove(board);
 
-            view.displayMoveMessage(currentPlayer);
-            view.displayBoard(board);
+            view.displayBoard(board, currentPlayer);
 
-            // update board (check for win)
             if (board.hasWin(currentPlayer.getMark())) {
                 view.displayWinMessage(currentPlayer);
                 break;
@@ -36,7 +36,9 @@ public class Game {
 
     public static void main( String[] args )
     {
-        View view = new ConsoleView();
+        InputStream inputStream = System.in;
+        PrintStream outputStream = System.out;
+        View view = new ConsoleView(inputStream, outputStream);
         view.displayWelcome();
 
         boolean playAgain = true;
@@ -44,11 +46,11 @@ public class Game {
             Player xPlayer;
             Player oPlayer;
             if (view.getPlayFirst()) {
-                xPlayer = new InputStreamPlayer(System.in, Mark.X);
+                xPlayer = new InputStreamPlayer(inputStream, outputStream, Mark.X);
                 oPlayer = new RulesPlayer(Mark.O);
             } else {
                 xPlayer = new RulesPlayer(Mark.X);
-                oPlayer = new InputStreamPlayer(System.in, Mark.O);
+                oPlayer = new InputStreamPlayer(inputStream, outputStream, Mark.O);
             }
 
             Game game = new Game();

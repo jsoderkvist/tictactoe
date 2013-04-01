@@ -138,7 +138,7 @@ public class Board {
         return opposites;
     }
 
-    public static String getNumberGuide() {
+    public static String getNumberGuide() { // TODO this has formatting - move somewhere else?
         StringBuilder builder = new StringBuilder();
         builder.append("|1|2|3|\n");
         builder.append("|4|5|6|\n");

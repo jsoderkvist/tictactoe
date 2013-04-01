@@ -2,63 +2,82 @@ package com.jean.tictactoe.view;
 
 import com.jean.tictactoe.model.*;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Console View implementation
  */
+// TODO rename to ScannerView? something other than view? Referee?? (combined with Game?)
 public class ConsoleView implements View {
-    Scanner scanner;
+    private Scanner scanner;
+    private PrintStream outputStream;
+    private Matcher matcher;
 
-    public ConsoleView() {
-        scanner = new Scanner(System.in);
+    public ConsoleView(InputStream inputStream, PrintStream outputStream) {
+        scanner = new Scanner(inputStream);
+        this.outputStream = outputStream;
+        Pattern pattern = Pattern.compile("^\\s*([y,n])\\s*$");
+        matcher = pattern.matcher("");
     }
 
-    public void displayBoard(Board board) {
-        System.out.println(board);
-    }
-
-    public void displayMoveMessage(Player player) {
-        System.out.println(player.getMoveMessage());
+    public void displayBoard(Board board, Player player) {
+        outputStream.format("Here's the board after %s:\n", player.getMoveMessage());
+        outputStream.println(board);
     }
 
     public void displayWinMessage(Player player) {
-        System.out.println(player.getWinMessage());
+        outputStream.println(player.getWinMessage());
     }
 
     public void displayTieMessage() {
-        System.out.println("It's a tie. Good game.");
+        outputStream.println("It's a tie. Good game.");
     }
 
     public void displayWelcome() {
-        System.out.println("Let's play Tic Tac Toe!\n");
-        System.out.println("You can enter your move as a number using the guide below:\n");
-        System.out.println(Board.getNumberGuide());
+        outputStream.println("Let's play Tic Tac Toe!\n");
+        outputStream.println("You can enter your move as a number using the guide below:\n");
+        outputStream.println(Board.getNumberGuide());
     }
 
     public void displayGoodbye() {
-        System.out.println("Okay. Bye!");
+        outputStream.println("Okay. Bye!");
     }
 
-    public boolean getPlayFirst() {
-        System.out.print("Would you like to go first? (y or n):");
-
-        boolean playFirst = scanner.nextLine().startsWith("y");
+    public boolean getPlayFirst() {   // TODO move to InputStreamPlayer?
+        Boolean playFirst = getYesOrNoResponse("Would you like to go first");
         if (playFirst) {
-            System.out.print("\nOkay. ");
+            outputStream.print("\nOkay. ");
         } else {
-            System.out.println("\nOkay, I'll go.\n");
+            outputStream.println("\nOkay, I'll go.\n");
         }
 
         return playFirst;
     }
 
     public boolean getPlayAgain() {
-        System.out.print("\nWant to play again? (y or n):");
-        boolean playAgain = scanner.nextLine().startsWith("y");
-        System.out.println();
+        Boolean playAgain = getYesOrNoResponse("Want to play again");
+        outputStream.println();
 
         return playAgain;
     }
 
+    private boolean getYesOrNoResponse(String question) {
+        Boolean response = null;
+        while (response == null) {
+            outputStream.format("\n%s? (y or n):", question);
+
+            matcher.reset(scanner.nextLine());
+            if (matcher.find()) {
+                response = "y".equals(matcher.group(1));
+            } else {
+                outputStream.println("\nPlease enter your response as 'y' or 'n'\n");
+            }
+        }
+
+        return response;
+    }
 }

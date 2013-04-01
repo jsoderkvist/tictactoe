@@ -30,7 +30,7 @@ public class RulesPlayer implements Player {
     }
 
     public String getMoveMessage() {
-        return "Here's my move:\n";
+        return "my move";
     }
 
     public Integer makeNextMove(Board board) {

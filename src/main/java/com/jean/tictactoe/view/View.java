@@ -7,8 +7,7 @@ import com.jean.tictactoe.model.Player;
  * View interface
  */
 public interface View {
-    public void displayMoveMessage(Player player);
-    public void displayBoard(Board board);
+    public void displayBoard(Board board, Player player);
     public void displayWinMessage(Player player);
     public void displayTieMessage();
     public void displayWelcome();
