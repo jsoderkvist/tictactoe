@@ -1,9 +1,7 @@
-package com.jean.tictactoe.controller;
+package com.jean.tictactoe;
 
 import com.jean.tictactoe.model.InputStreamPlayer;
 import com.jean.tictactoe.model.Mark;
-import com.jean.tictactoe.view.ConsoleView;
-import com.jean.tictactoe.view.View;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
@@ -14,9 +12,9 @@ import java.io.PrintStream;
 /**
  * Unit tests for Tic Tac Toe Game.
  */
-public class GameTest extends TestCase {
+public class ConsoleGameTest extends TestCase {
 
-    public void testGameWinO()
+    public void testGameWin()
     {
         String inputMoves = "1\n2\n4\n";
         InputStream inputStream = new ByteArrayInputStream(inputMoves.getBytes());
@@ -28,8 +26,8 @@ public class GameTest extends TestCase {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
-        Game game = new Game();
-        game.play(xPlayer, oPlayer, new ConsoleView(inputStream, printStream));
+        ConsoleGame game = new ConsoleGame(printStream);
+        game.play(xPlayer, oPlayer);
         assertTrue(outputStream.toString().contains(oPlayer.getWinMessage()));
     }
 
@@ -45,12 +43,9 @@ public class GameTest extends TestCase {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
-        Game game = new Game();
-        game.play(xPlayer, oPlayer, new ConsoleView(inputStream, printStream));
+        ConsoleGame game = new ConsoleGame(printStream);
+        game.play(xPlayer, oPlayer);
 
-        ByteArrayOutputStream expectedOutputStream = new ByteArrayOutputStream();
-        View expectedView = new ConsoleView(inputStream, new PrintStream(expectedOutputStream));
-        expectedView.displayTieMessage();
-        assertTrue(outputStream.toString().contains(expectedOutputStream.toString()));
+        assertTrue(outputStream.toString().contains("tie"));
     }
 }

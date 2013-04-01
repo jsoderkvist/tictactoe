@@ -15,10 +15,18 @@ public class RulesPlayer implements Player {
 
     private static Logger logger = Logger.getLogger("com.jean.tictactoe.model.RulesPlayer");
 
+    public RulesPlayer() {
+        logger.setLevel(Level.OFF);
+    }
+
     public RulesPlayer(Mark mark) {
+        this();
+        this.setMark(mark);
+    }
+
+    public void setMark(Mark mark) {
         this.mark = mark;
         this.opponentMark = mark == Mark.X ? Mark.O : Mark.X;
-        logger.setLevel(Level.OFF);
     }
 
     public Mark getMark() {
@@ -133,7 +141,7 @@ public class RulesPlayer implements Player {
         possibleBoard.setMarkAt(move, mark);
         possibleBoard.setMarkAt(opponentMove, opponentMark);
 
-        return findPossibleWins(possibleBoard, opponentMark).size() >= 2;
+        return findAllWins(possibleBoard, opponentMark).size() >= 2;
     }
 
     private Integer findSide(Board board) {
@@ -161,7 +169,7 @@ public class RulesPlayer implements Player {
             if (board.getMarkAt(i) == null) {
                 Board possibleBoard = new Board(board);
                 possibleBoard.setMarkAt(i, markToFind);
-                List<Integer> possibleWins = findPossibleWins(possibleBoard, markToFind);
+                List<Integer> possibleWins = findAllWins(possibleBoard, markToFind);
                 if (possibleWins.size() >= 2) {
                     return i;
                 }
@@ -172,7 +180,6 @@ public class RulesPlayer implements Player {
     }
 
     private Integer findWin(Board board, Mark markToFind) {
-        // find first winning move
         List<Integer> cells = findEmptyCellsInRowWithMark(board, markToFind, 2);
 
         if (cells.isEmpty()) {
@@ -186,8 +193,7 @@ public class RulesPlayer implements Player {
         return cells.isEmpty() ? null : cells.get(0);
     }
 
-    private List<Integer> findPossibleWins(Board board, Mark markToFind) {
-        // find all winning moves
+    private List<Integer> findAllWins(Board board, Mark markToFind) {
         List<Integer> cells = new ArrayList<Integer>();
 
         List<Integer> emptyCells = findEmptyCellsInRowWithMark(board, markToFind, 2);
