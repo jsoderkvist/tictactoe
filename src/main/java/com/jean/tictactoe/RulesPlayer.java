@@ -76,12 +76,12 @@ public class RulesPlayer implements Player {
 
         if (move == null) {
             logger.info("Looking for any corner...");
-            move = findCorner(board);
+            move = findEmptyCell(board.getCorners());
         }
 
         if (move == null) {
             logger.info("Looking for a side...");
-            move = findSide(board);
+            move = findEmptyCell(board.getSides());
         }
 
         if (move != null) {
@@ -92,20 +92,19 @@ public class RulesPlayer implements Player {
     }
 
     private Integer findOppositeCorner(Board board) {
-        for (int[] opposites : Board.getOppositeCorners()) {
-            if (board.getMarkAt(opposites[0]) == opponentMark && board.getMarkAt(opposites[1]) == null) {
-                return opposites[1];
+        for (Cell[] opposites : board.getOppositeCorners()) {
+            if (opposites[0].getMark() == opponentMark && opposites[1].getMark() == null) {
+                return opposites[1].getIndex();
             }
         }
 
         return null;
     }
 
-    private Integer findCorner(Board board) {
-        for (Integer i : Board.getCorners()) {
-            Mark mark = board.getMarkAt(i);
-            if (mark == null) {
-                return i;
+    private Integer findEmptyCell(List<Cell> cells) {
+        for (Cell cell : cells) {
+            if (cell.getMark() == null) {
+                return cell.getIndex();
             }
         }
 
@@ -144,34 +143,23 @@ public class RulesPlayer implements Player {
         return findAllWins(possibleBoard, opponentMark).size() >= 2;
     }
 
-    private Integer findSide(Board board) {
-        for (Integer i : Board.getSides()) {
-            Mark mark = board.getMarkAt(i);
-            if (mark == null) {
-                return i;
-            }
-        }
-
-        return null;
-    }
-
     private Integer findCenter(Board board) {
-        int center = Board.getCenter();
-        if (board.getMarkAt(center) == null) {
-            return center;
+        Cell center = board.getCenter();
+        if (center.getMark() == null) {
+            return center.getIndex();
         }
 
         return null;
     }
 
     private Integer findFork(Board board, Mark markToFind) {
-        for (Integer i : Board.getCells()) {
-            if (board.getMarkAt(i) == null) {
+        for (Cell cell : board.getCells()) {
+            if (cell.getMark() == null) {
                 Board possibleBoard = new Board(board);
-                possibleBoard.setMarkAt(i, markToFind);
+                possibleBoard.setMarkAt(cell.getIndex(), markToFind);
                 List<Integer> possibleWins = findAllWins(possibleBoard, markToFind);
                 if (possibleWins.size() >= 2) {
-                    return i;
+                    return cell.getIndex();
                 }
             }
         }
@@ -215,26 +203,26 @@ public class RulesPlayer implements Player {
     }
 
     private List<Integer> findEmptyCellsInRowWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board, Board.getRows(), markToFind, markCount);
+        return findEmptyCellsInRowWithMark(board.getRows(), markToFind, markCount);
     }
 
     private List<Integer> findEmptyCellsInColumnWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board, Board.getColumns(), markToFind, markCount);
+        return findEmptyCellsInRowWithMark(board.getColumns(), markToFind, markCount);
     }
 
     private List<Integer> findEmptyCellsInDiagonalWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board, Board.getDiagonals(), markToFind, markCount);
+        return findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, markCount);
     }
 
-    private List<Integer> findEmptyCellsInRowWithMark(Board board, List<int[]> rows, Mark mark, int markCount) {
+    private List<Integer> findEmptyCellsInRowWithMark(List<Cell[]> rows, Mark mark, int markCount) {
         // find row with specified count of mark and nothing else, return the "nothing else" spot(s)
-        for (int[] row : rows) {
+        for (Cell[] row : rows) {
             int rowMarkCount = 0;
             List<Integer> emptyCells = new ArrayList<Integer>();
-            for (int i : row) {
-                Mark cellMark = board.getMarkAt(i);
+            for (Cell cell : row) {
+                Mark cellMark = cell.getMark();
                 if (cellMark == null) {
-                    emptyCells.add(i);
+                    emptyCells.add(cell.getIndex());
                 } else if (cellMark == mark) {
                     rowMarkCount++;
                 }

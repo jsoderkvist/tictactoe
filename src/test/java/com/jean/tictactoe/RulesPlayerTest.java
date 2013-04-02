@@ -21,11 +21,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(5, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(6, cell);
+        assertEquals(6, move);
     }
 
     public void testFindWinInSecondDiagonal() {
@@ -34,11 +33,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(5, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(4, cell);
+        assertEquals(4, move);
     }
 
     public void testFindWinInHorizontalRow() {
@@ -47,11 +45,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(3, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(0, cell);
+        assertEquals(0, move);
     }
 
     public void testFindWinInVerticalRow() {
@@ -60,11 +57,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(6, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(8, cell);
+        assertEquals(8, move);
     }
 
     public void testBlockWin() {
@@ -74,11 +70,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(5, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(3, cell);
+        assertEquals(3, move);
     }
 
     public void testFindFork() {
@@ -88,11 +83,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(5, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(6, cell);
+        assertEquals(6, move);
     }
 
     public void testFindFork2() {
@@ -102,11 +96,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(8, Mark.X);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(6, cell);
+        assertEquals(6, move);
     }
 
     public void testBlockFork1() {
@@ -116,11 +109,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(8, Mark.X);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(2, cell);
+        assertEquals(2, move);
     }
 
     public void testBlockFork2() {
@@ -130,11 +122,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(8, Mark.X);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(3, cell);
+        assertEquals(3, move);
     }
 
     public void testPlayCenter() {
@@ -142,11 +133,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(0, Mark.X);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertEquals(4, cell);
+        assertEquals(4, move);
     }
 
     public void testPlayOppositeCorner() {
@@ -154,9 +144,10 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(0, Mark.O);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
-        assertNotNull(cell);
-        assertEquals(8, cell);
+        int move = player.makeNextMove(board);
+        System.out.println(board);
+
+        assertEquals(8, move);
     }
 
     public void testPlayCorner() {
@@ -164,10 +155,9 @@ public class RulesPlayerTest extends TestCase {
         board.setMarkAt(4, Mark.X);
         System.out.println(board);
 
-        int cell = player.makeNextMove(board);
+        int move = player.makeNextMove(board);
         System.out.println(board);
 
-        assertNotNull(cell);
-        assertTrue(Board.getCorners().contains(cell));
+        assertEquals(0, move);
     }
 }

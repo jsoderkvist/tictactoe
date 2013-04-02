@@ -20,12 +20,9 @@ public class BoardTest extends TestCase {
         assertNull(board.getMarkAt(1));
     }
 
-    public void testBoardDisplay() {  // TODO move
+    public void testBoardToString() {
         System.out.print(board.toString());
         assertNotNull(board.toString());
-
-        //System.out.print(Board.getNumberGuide());
-       // assertNotNull(Board.getNumberGuide());
     }
 
     public void testHasWinNoWin() {

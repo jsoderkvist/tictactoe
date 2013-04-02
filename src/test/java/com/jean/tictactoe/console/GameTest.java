@@ -47,4 +47,9 @@ public class GameTest extends TestCase {
 
         assertTrue(outputStream.toString().contains("tie"));
     }
+
+    public void testGetMoveGuide() {
+        System.out.print(Game.getMoveGuide());
+        assertNotNull(Game.getMoveGuide());
+    }
 }
