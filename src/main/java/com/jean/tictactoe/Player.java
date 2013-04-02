@@ -1,7 +1,7 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe;
 
 /**
- * Tic Tac Toe Player Interface   TODO rename to TicTacToePlayer
+ * Tic Tac Toe Player Interface
  */
 public interface Player {
     public void setMark(Mark mark);

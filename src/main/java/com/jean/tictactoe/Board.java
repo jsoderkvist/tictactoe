@@ -1,4 +1,4 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,15 +136,6 @@ public class Board {
         opposites.add(opposite2);
 
         return opposites;
-    }
-
-    public static String getNumberGuide() { // TODO this has formatting - move somewhere else?
-        StringBuilder builder = new StringBuilder();
-        builder.append("|1|2|3|\n");
-        builder.append("|4|5|6|\n");
-        builder.append("|7|8|9|\n");
-
-        return builder.toString();
     }
 
     @Override

@@ -1,7 +1,6 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.console;
 
-import com.jean.tictactoe.model.InputStreamPlayer;
-import com.jean.tictactoe.model.Mark;
+import com.jean.tictactoe.Mark;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
@@ -12,7 +11,7 @@ import java.io.PrintStream;
 /**
  * Unit tests for Tic Tac Toe Game.
  */
-public class ConsoleGameTest extends TestCase {
+public class GameTest extends TestCase {
 
     public void testGameWin()
     {
@@ -26,7 +25,7 @@ public class ConsoleGameTest extends TestCase {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
-        ConsoleGame game = new ConsoleGame(printStream);
+        Game game = new Game(printStream);
         game.play(xPlayer, oPlayer);
         assertTrue(outputStream.toString().contains(oPlayer.getWinMessage()));
     }
@@ -43,7 +42,7 @@ public class ConsoleGameTest extends TestCase {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);
-        ConsoleGame game = new ConsoleGame(printStream);
+        Game game = new Game(printStream);
         game.play(xPlayer, oPlayer);
 
         assertTrue(outputStream.toString().contains("tie"));

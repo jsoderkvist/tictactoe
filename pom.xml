@@ -17,7 +17,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.jean.tictactoe.controller.Game</mainClass>
+                            <mainClass>com.jean.tictactoe.console.Game</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

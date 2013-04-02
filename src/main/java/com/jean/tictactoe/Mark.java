@@ -1,4 +1,4 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe;
 
 /**
  * Player marks: X or O

@@ -1,4 +1,8 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe.console;
+
+import com.jean.tictactoe.Mark;
+import com.jean.tictactoe.Board;
+import com.jean.tictactoe.Player;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -9,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * InputStreamPlayer reads moves from an InputStream
  */
-public class InputStreamPlayer implements Player, InputPlayer {
+public class InputStreamPlayer implements Player {
     private Mark mark;
     private Scanner scanner;
     private Matcher moveMatcher;
@@ -54,7 +58,7 @@ public class InputStreamPlayer implements Player, InputPlayer {
                 move = Integer.parseInt(moveMatcher.group(1)) - 1;
             } else {
                 printStream.println("\nHmm, that's not a valid move. Here's the guide again:\n");
-                printStream.println(Board.getNumberGuide());
+                printStream.println(Game.getMoveGuide());
                 continue;
             }
 

@@ -1,5 +1,7 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe.console;
 
+import com.jean.tictactoe.Board;
+import com.jean.tictactoe.Mark;
 import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;

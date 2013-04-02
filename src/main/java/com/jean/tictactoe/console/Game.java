@@ -1,16 +1,19 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.console;
 
-import com.jean.tictactoe.model.*;
+import com.jean.tictactoe.Board;
+import com.jean.tictactoe.Mark;
+import com.jean.tictactoe.Player;
+import com.jean.tictactoe.RulesPlayer;
 
 import java.io.PrintStream;
 
 /**
  * Console Tic Tac Toe Game
  */
-public class ConsoleGame {
+public class Game {
     private PrintStream printStream;
 
-    public ConsoleGame(PrintStream printStream) {
+    public Game(PrintStream printStream) {
         this.printStream = printStream;
     }
 
@@ -43,16 +46,25 @@ public class ConsoleGame {
     public void welcome() {
         printStream.println("\nLet's play Tic Tac Toe!\n");
         printStream.println("You can enter your move as a number using the guide below:\n");
-        printStream.print(Board.getNumberGuide());
+        printStream.print(Game.getMoveGuide());
     }
 
     public void goodbye() {
         printStream.println("\nOkay. Bye!");
     }
 
+    public static String getMoveGuide() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("|1|2|3|\n");
+        builder.append("|4|5|6|\n");
+        builder.append("|7|8|9|\n");
+
+        return builder.toString();
+    }
+
     public static void main(String[] args) {
         PrintStream printStream = System.out;
-        ConsoleGame game = new ConsoleGame(printStream);
+        Game game = new Game(printStream);
         game.welcome();
 
         InputStreamPlayer inputStreamPlayer = new InputStreamPlayer(System.in, printStream);

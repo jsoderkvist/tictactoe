@@ -1,4 +1,4 @@
-package com.jean.tictactoe.model;
+package com.jean.tictactoe;
 
 import junit.framework.TestCase;
 
@@ -20,12 +20,12 @@ public class BoardTest extends TestCase {
         assertNull(board.getMarkAt(1));
     }
 
-    public void testBoardDisplay() {
+    public void testBoardDisplay() {  // TODO move
         System.out.print(board.toString());
         assertNotNull(board.toString());
 
-        System.out.print(Board.getNumberGuide());
-        assertNotNull(Board.getNumberGuide());
+        //System.out.print(Board.getNumberGuide());
+       // assertNotNull(Board.getNumberGuide());
     }
 
     public void testHasWinNoWin() {
