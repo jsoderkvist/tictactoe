@@ -42,6 +42,10 @@ public class RulesPlayer implements Player {
     }
 
     public Integer makeNextMove(Board board) {
+        if (mark == null) {
+            throw new IllegalStateException("Player mark must be set");
+        }
+
         logger.info("Looking for win for me...");
         Integer move = findWin(board, mark);
 
@@ -95,6 +99,8 @@ public class RulesPlayer implements Player {
         for (Cell[] opposites : board.getOppositeCorners()) {
             if (opposites[0].getMark() == opponentMark && opposites[1].getMark() == null) {
                 return opposites[1].getIndex();
+            } else if (opposites[0].getMark() == null && opposites[1].getMark() == opponentMark) {
+                return opposites[0].getIndex();
             }
         }
 
@@ -113,14 +119,14 @@ public class RulesPlayer implements Player {
 
     private Integer findMoveToSetupWin(Board board) {
         // find row with one of my mark and nothing else
-        List<Integer> possibleMoves = findEmptyCellsInRowWithMark(board, mark, 1);
+        List<Integer> possibleMoves = findEmptyCellsInRowWithMark(board.getRows(), mark, 1);
 
         if (possibleMoves.isEmpty()) {
-            possibleMoves = findEmptyCellsInColumnWithMark(board, mark, 1);
+            possibleMoves = findEmptyCellsInRowWithMark(board.getColumns(), mark, 1);
         }
 
         if (possibleMoves.isEmpty()) {
-            possibleMoves = findEmptyCellsInDiagonalWithMark(board, mark, 1);
+            possibleMoves = findEmptyCellsInRowWithMark(board.getDiagonals(), mark, 1);
         }
 
         // choose the cell that doesn't force opponent into a fork
@@ -168,14 +174,14 @@ public class RulesPlayer implements Player {
     }
 
     private Integer findWin(Board board, Mark markToFind) {
-        List<Integer> cells = findEmptyCellsInRowWithMark(board, markToFind, 2);
+        List<Integer> cells = findEmptyCellsInRowWithMark(board.getRows(), markToFind, 2);
 
         if (cells.isEmpty()) {
-            cells = findEmptyCellsInColumnWithMark(board, markToFind, 2);
+            cells = findEmptyCellsInRowWithMark(board.getColumns(), markToFind, 2);
         }
 
         if (cells.isEmpty()) {
-            cells = findEmptyCellsInDiagonalWithMark(board, markToFind, 2);
+            cells = findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, 2);
         }
 
         return cells.isEmpty() ? null : cells.get(0);
@@ -184,34 +190,22 @@ public class RulesPlayer implements Player {
     private List<Integer> findAllWins(Board board, Mark markToFind) {
         List<Integer> cells = new ArrayList<Integer>();
 
-        List<Integer> emptyCells = findEmptyCellsInRowWithMark(board, markToFind, 2);
+        List<Integer> emptyCells = findEmptyCellsInRowWithMark(board.getRows(), markToFind, 2);
         if (!emptyCells.isEmpty()) {
             cells.add(emptyCells.get(0));
         }
 
-        emptyCells = findEmptyCellsInColumnWithMark(board, markToFind, 2);
+        emptyCells = findEmptyCellsInRowWithMark(board.getColumns(), markToFind, 2);
         if (!emptyCells.isEmpty()) {
             cells.add(emptyCells.get(0));
         }
 
-        emptyCells = findEmptyCellsInDiagonalWithMark(board, markToFind, 2);
+        emptyCells = findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, 2);
         if (!emptyCells.isEmpty()) {
             cells.add(emptyCells.get(0));
         }
 
         return cells;
-    }
-
-    private List<Integer> findEmptyCellsInRowWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board.getRows(), markToFind, markCount);
-    }
-
-    private List<Integer> findEmptyCellsInColumnWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board.getColumns(), markToFind, markCount);
-    }
-
-    private List<Integer> findEmptyCellsInDiagonalWithMark(Board board, Mark markToFind, int markCount) {
-        return findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, markCount);
     }
 
     private List<Integer> findEmptyCellsInRowWithMark(List<Cell[]> rows, Mark mark, int markCount) {
@@ -232,6 +226,7 @@ public class RulesPlayer implements Player {
                 return emptyCells;
             }
         }
+
         return Collections.emptyList();
     }
 }

@@ -49,6 +49,10 @@ public class InputStreamPlayer implements Player {
     }
 
     public Integer makeNextMove(Board board) {
+        if (mark == null) {
+            throw new IllegalStateException("Player mark must be set");
+        }
+
         Integer move = null;
         while (move == null) {
             printStream.print("Enter your next move (1-9):");

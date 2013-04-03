@@ -38,7 +38,6 @@ public class Game {
                 break;
             }
 
-            // swap players
             currentPlayer = currentPlayer == xPlayer ? oPlayer : xPlayer;
         }
     }

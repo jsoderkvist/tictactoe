@@ -1,15 +1,15 @@
 package com.jean.tictactoe;
 
 /**
- * Cell represents a single spot on the board.
+ * Cell or spot on a Board
  */
 public class Cell {
     private int index;
     private Mark mark;
 
-    public Cell(int index, Mark mark) {
+    public Cell(int index) {
         this.index = index;
-        this.mark = mark;
+        this.mark = null;
     }
 
     public int getIndex() {

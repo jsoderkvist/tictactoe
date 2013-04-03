@@ -13,7 +13,7 @@ public class Board {
     public Board() {
         cells = new Cell[NUM_CELLS];
         for (int i = 0; i < NUM_CELLS; i++) {
-            cells[i] = new Cell(i, null);
+            cells[i] = new Cell(i);
         }
     }
 
@@ -21,7 +21,7 @@ public class Board {
         this();
         for (Cell cell : board.getCells()) {
             int index = cell.getIndex();
-            cells[index] = new Cell(index, cell.getMark());
+            cells[index].setMark(cell.getMark());
         }
     }
 
