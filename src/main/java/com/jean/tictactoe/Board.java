@@ -34,20 +34,8 @@ public class Board {
     }
 
     public boolean hasWin(Mark mark) {
-        for (Cell[] row : getRows()) {
+        for (Cell[] row : getAllRows()) {
             if (row[0].getMark() == mark && row[1].getMark() == mark && row[2].getMark() == mark) {
-                return true;
-            }
-        }
-
-        for (Cell[] column : getColumns()) {
-            if (column[0].getMark() == mark && column[1].getMark() == mark && column[2].getMark() == mark) {
-                return true;
-            }
-        }
-
-        for (Cell[] diagonal : getDiagonals()) {
-            if (diagonal[0].getMark() == mark && diagonal[1].getMark() == mark && diagonal[2].getMark() == mark) {
                 return true;
             }
         }
@@ -65,7 +53,26 @@ public class Board {
         return true;
     }
 
-    public List<Cell[]> getRows() {
+    public List<Cell[]> getAllRows() {
+        ArrayList<Cell[]> rows = new ArrayList<Cell[]>();
+        rows.addAll(getRows());
+
+        Cell[] col1 = { cells[0], cells[3], cells[6] };
+        Cell[] col2 = { cells[1], cells[4], cells[7] };
+        Cell[] col3 = { cells[2], cells[5], cells[8] };
+        rows.add(col1);
+        rows.add(col2);
+        rows.add(col3);
+
+        Cell[] diagonal1 = { cells[0], cells[4], cells[8] };
+        Cell[] diagonal2 = { cells[2], cells[4], cells[6] };
+        rows.add(diagonal1);
+        rows.add(diagonal2);
+
+        return rows;
+    }
+
+    private List<Cell[]> getRows() {
         ArrayList<Cell[]> rows = new ArrayList<Cell[]>();
         Cell[] row1 = { cells[0], cells[1], cells[2] };
         Cell[] row2 = { cells[3], cells[4], cells[5] };
@@ -75,28 +82,6 @@ public class Board {
         rows.add(row3);
 
         return rows;
-    }
-
-    public List<Cell[]> getColumns() {
-        ArrayList<Cell[]> columns = new ArrayList<Cell[]>();
-        Cell[] col1 = { cells[0], cells[3], cells[6] };
-        Cell[] col2 = { cells[1], cells[4], cells[7] };
-        Cell[] col3 = { cells[2], cells[5], cells[8] };
-        columns.add(col1);
-        columns.add(col2);
-        columns.add(col3);
-
-        return columns;
-    }
-
-    public List<Cell[]> getDiagonals() {
-        ArrayList<Cell[]> diagonals = new ArrayList<Cell[]>();
-        Cell[] diagonal1 = { cells[0], cells[4], cells[8] };
-        Cell[] diagonal2 = { cells[2], cells[4], cells[6] };
-        diagonals.add(diagonal1);
-        diagonals.add(diagonal2);
-
-        return diagonals;
     }
 
     public List<Cell> getCorners() {

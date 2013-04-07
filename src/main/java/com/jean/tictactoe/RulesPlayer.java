@@ -119,22 +119,15 @@ public class RulesPlayer implements Player {
 
     private Integer findMoveToSetupWin(Board board) {
         // find row with one of my mark and nothing else
-        List<Integer> possibleMoves = findEmptyCellsInRowWithMark(board.getRows(), mark, 1);
-
-        if (possibleMoves.isEmpty()) {
-            possibleMoves = findEmptyCellsInRowWithMark(board.getColumns(), mark, 1);
-        }
-
-        if (possibleMoves.isEmpty()) {
-            possibleMoves = findEmptyCellsInRowWithMark(board.getDiagonals(), mark, 1);
-        }
-
-        // choose the cell that doesn't force opponent into a fork
-        if (!possibleMoves.isEmpty()) {
-            if (!isForcedOpponentFork(board, possibleMoves.get(0), possibleMoves.get(1))) {
-                return possibleMoves.get(0);
-            } else {
-                return possibleMoves.get(1);
+        for (Cell[] row : board.getAllRows()) {
+            List<Integer> possibleMoves = findEmptyCellsInRowWithMark(row, mark, 1);
+            if (!possibleMoves.isEmpty()) {
+                // choose the cell that doesn't force opponent into a fork
+                if (!isForcedOpponentFork(board, possibleMoves.get(0), possibleMoves.get(1))) {
+                    return possibleMoves.get(0);
+                } else {
+                    return possibleMoves.get(1);
+                }
             }
         }
 
@@ -174,57 +167,42 @@ public class RulesPlayer implements Player {
     }
 
     private Integer findWin(Board board, Mark markToFind) {
-        List<Integer> cells = findEmptyCellsInRowWithMark(board.getRows(), markToFind, 2);
-
-        if (cells.isEmpty()) {
-            cells = findEmptyCellsInRowWithMark(board.getColumns(), markToFind, 2);
+        for (Cell[] row : board.getAllRows()) {
+            List<Integer> emptyCells = findEmptyCellsInRowWithMark(row, markToFind, 2);
+            if (!emptyCells.isEmpty()) {
+                return emptyCells.get(0);
+            }
         }
 
-        if (cells.isEmpty()) {
-            cells = findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, 2);
-        }
-
-        return cells.isEmpty() ? null : cells.get(0);
+        return null;
     }
 
     private List<Integer> findAllWins(Board board, Mark markToFind) {
         List<Integer> cells = new ArrayList<Integer>();
-
-        List<Integer> emptyCells = findEmptyCellsInRowWithMark(board.getRows(), markToFind, 2);
-        if (!emptyCells.isEmpty()) {
-            cells.add(emptyCells.get(0));
-        }
-
-        emptyCells = findEmptyCellsInRowWithMark(board.getColumns(), markToFind, 2);
-        if (!emptyCells.isEmpty()) {
-            cells.add(emptyCells.get(0));
-        }
-
-        emptyCells = findEmptyCellsInRowWithMark(board.getDiagonals(), markToFind, 2);
-        if (!emptyCells.isEmpty()) {
-            cells.add(emptyCells.get(0));
+        for (Cell[] row : board.getAllRows()) {
+            List<Integer> emptyCells = findEmptyCellsInRowWithMark(row, markToFind, 2);
+            if (!emptyCells.isEmpty()) {
+                cells.add(emptyCells.get(0));
+            }
         }
 
         return cells;
     }
 
-    private List<Integer> findEmptyCellsInRowWithMark(List<Cell[]> rows, Mark mark, int markCount) {
-        // find row with specified count of mark and nothing else, return the "nothing else" spot(s)
-        for (Cell[] row : rows) {
-            int rowMarkCount = 0;
-            List<Integer> emptyCells = new ArrayList<Integer>();
-            for (Cell cell : row) {
-                Mark cellMark = cell.getMark();
-                if (cellMark == null) {
-                    emptyCells.add(cell.getIndex());
-                } else if (cellMark == mark) {
-                    rowMarkCount++;
-                }
+    private List<Integer> findEmptyCellsInRowWithMark(Cell[] row, Mark mark, int markCount) {
+        int rowMarkCount = 0;
+        List<Integer> emptyCells = new ArrayList<Integer>();
+        for (Cell cell : row) {
+            Mark cellMark = cell.getMark();
+            if (cellMark == null) {
+                emptyCells.add(cell.getIndex());
+            } else if (cellMark == mark) {
+                rowMarkCount++;
             }
+        }
 
-            if (emptyCells.size() == (row.length - markCount) && rowMarkCount == markCount) {
-                return emptyCells;
-            }
+        if (emptyCells.size() == (row.length - markCount) && rowMarkCount == markCount) {
+            return emptyCells;
         }
 
         return Collections.emptyList();
