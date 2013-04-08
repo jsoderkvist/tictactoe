@@ -20,8 +20,7 @@ public class BoardTest extends TestCase {
         assertNull(board.getMarkAt(1));
     }
 
-    public void testBoardToString() {  // TODO do something with this
-        System.out.print(board.toString());
+    public void testBoardToString() {
         assertNotNull(board.toString());
     }
 

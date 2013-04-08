@@ -1,5 +1,7 @@
-package com.jean.tictactoe;
+package com.jean.tictactoe.rule;
 
+import com.jean.tictactoe.Board;
+import com.jean.tictactoe.Mark;
 import junit.framework.TestCase;
 
 /**

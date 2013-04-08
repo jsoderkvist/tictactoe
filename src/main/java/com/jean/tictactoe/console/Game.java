@@ -3,7 +3,7 @@ package com.jean.tictactoe.console;
 import com.jean.tictactoe.Board;
 import com.jean.tictactoe.Mark;
 import com.jean.tictactoe.Player;
-import com.jean.tictactoe.RulesPlayer;
+import com.jean.tictactoe.rule.RulesPlayer;
 
 import java.io.PrintStream;
 
@@ -26,12 +26,10 @@ public class Game {
 
         while (true) {
             currentPlayer.makeNextMove(board);
-
-            printStream.format("Here's the board after %s:\n", currentPlayer.getMoveMessage());
-            printStream.println(board);
+            showBoard(board, currentPlayer);
 
             if (board.hasWin(currentPlayer.getMark())) {
-                printStream.println(currentPlayer.getWinMessage());
+                showWin(currentPlayer);
                 break;
             } else if (board.hasDraw()) {
                 printStream.println("It's a tie. Good game.");
@@ -59,6 +57,25 @@ public class Game {
         builder.append("|7|8|9|\n");
 
         return builder.toString();
+    }
+
+    private void showBoard(Board board, Player currentPlayer) {
+        String playerMessage;
+        if (currentPlayer.hasAI()) {
+            playerMessage = "my move";
+        } else {
+            playerMessage = "your move";
+        }
+        printStream.format("Here's the board after %s:\n", playerMessage);
+        printStream.println(board);
+    }
+
+    private void showWin(Player currentPlayer) {
+        if (currentPlayer.hasAI()) {
+            printStream.println("Sorry, you lost. Better luck next time.");
+        } else {
+            printStream.println("You won! Jean has some debugging to do.");
+        }
     }
 
     public static void main(String[] args) {

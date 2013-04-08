@@ -27,7 +27,7 @@ public class GameTest extends TestCase {
         PrintStream printStream = new PrintStream(outputStream);
         Game game = new Game(printStream);
         game.play(xPlayer, oPlayer);
-        assertTrue(outputStream.toString().contains(oPlayer.getWinMessage()));
+        assertTrue(outputStream.toString().contains("won"));
     }
 
     public void testGameTie()
@@ -49,7 +49,9 @@ public class GameTest extends TestCase {
     }
 
     public void testGetMoveGuide() {
-        System.out.print(Game.getMoveGuide());
-        assertNotNull(Game.getMoveGuide());
+        String guide = Game.getMoveGuide();
+        for (int i = 1; i <= 9; i++) {
+            assertTrue(guide.contains(String.valueOf(i)));
+        }
     }
 }

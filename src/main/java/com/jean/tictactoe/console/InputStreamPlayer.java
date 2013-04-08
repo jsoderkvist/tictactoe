@@ -40,12 +40,8 @@ public class InputStreamPlayer implements Player {
         return mark;
     }
 
-    public String getWinMessage() {
-        return "You won! Jean has some debugging to do.";
-    }
-
-    public String getMoveMessage() {
-        return "your move";
+    public boolean hasAI() {
+        return false;
     }
 
     public Integer makeNextMove(Board board) {

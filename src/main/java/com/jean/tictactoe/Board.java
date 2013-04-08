@@ -124,7 +124,7 @@ public class Board {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder("\n");
         for (Cell[] row : getRows()) {
             builder.append("|");
             Mark mark = row[0].getMark();
